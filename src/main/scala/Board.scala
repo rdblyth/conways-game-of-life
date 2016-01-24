@@ -1,4 +1,4 @@
-class Board(aliveCells:List[Cell]) {
+class Board(aliveCells:Set[Cell]) {
 
   def tick() : Board = {
     new Board(getAliveCellsAfterTick())
@@ -8,7 +8,7 @@ class Board(aliveCells:List[Cell]) {
     aliveCells.contains(cell)
   }
 
-  private def getAliveCellsAfterTick() : List[Cell] = {
+  private def getAliveCellsAfterTick() : Set[Cell] = {
     getAliveCellsWithNeighbors().filter(cell=> isAliveAfterTick(cell))
   }
 
@@ -22,7 +22,7 @@ class Board(aliveCells:List[Cell]) {
     }
   }
 
-  private def getAliveCellsWithNeighbors() : List[Cell] = {
+  private def getAliveCellsWithNeighbors() : Set[Cell] = {
     aliveCells.flatMap(cell => cell.neighbors) ++ aliveCells
   }
 
