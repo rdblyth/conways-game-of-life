@@ -13,12 +13,10 @@ class Board(aliveCells:Set[Cell]) {
   }
 
   private def isAliveAfterTick(cell:Cell) : Boolean = {
-    val numLiveNeighbors = getNumberOfAliveNeighbors(cell)
-    if (isAlive(cell)) {
-      numLiveNeighbors == 2 || numLiveNeighbors == 3
-    }
-    else {
-      numLiveNeighbors == 3
+    (isAlive(cell), getNumberOfAliveNeighbors(cell)) match {
+      case (true, 2) => true
+      case (_, 3) => true
+      case _ => false
     }
   }
 
