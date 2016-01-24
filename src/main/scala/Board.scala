@@ -9,19 +9,19 @@ class Board(aliveCells:Set[Cell]) {
   }
 
   private def getAliveCellsAfterTick() : Set[Cell] = {
-    getAliveCellsWithNeighbors().filter(cell=> isAliveAfterTick(cell))
+    getAliveCellsWithNeighbors().filter(isAliveAfterTick(_))
   }
 
   private def isAliveAfterTick(cell:Cell) : Boolean = {
-    (isAlive(cell), getNumberOfAliveNeighbors(cell)) match {
-      case (true, 2) => true
-      case (_, 3) => true
+    (getNumberOfAliveNeighbors(cell), isAlive(cell)) match {
+      case (2, true) => true
+      case (3, _) => true
       case _ => false
     }
   }
 
   private def getAliveCellsWithNeighbors() : Set[Cell] = {
-    aliveCells.flatMap(cell => cell.neighbors) ++ aliveCells
+    aliveCells ++ aliveCells.flatMap(_.neighbors)
   }
 
   private def getNumberOfAliveNeighbors(cell:Cell) : Int = {
