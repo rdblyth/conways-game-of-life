@@ -1,4 +1,4 @@
-class Board(aliveCells:Set[Cell]) {
+case class Board(aliveCells:Set[Cell]) {
 
   def tick() : Board = {
     new Board(getAliveCellsAfterTick())
