@@ -9,12 +9,17 @@ import org.scalatest.prop.Checkers
 class BoardTest extends FunSuite with Checkers {
   test("Cell is alive") {
     val board = new Board(Set(Cell(0, 0)))
-    assert(board.isAlive(Cell(0, 0)) )
+    assert(board.isAlive(Cell(0, 0)))
   }
 
   test("Cell is dead") {
     val board = new Board(Set(Cell(0, 0)))
-    assert(!board.isAlive(Cell(1, 0)) )
+    assert(!board.isAlive(Cell(1, 0)))
+  }
+
+  test("Duplicate cells are not allowed") {
+    val board = new Board(Set(Cell(0, 0), Cell(0, 0)))
+    assert(board.aliveCells.size == 1)
   }
 
   test("Cell has 8 neighbors") {
@@ -66,5 +71,10 @@ class BoardTest extends FunSuite with Checkers {
   test("Dead cell with more than three live neighbors stays dead") {
     val board = new Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
     assert(!board.tick().isAlive(Cell(0,0)))
+  }
+
+  test("Tick is idempotent") {
+    val board = new Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
+    assert(board.tick() == board.tick())
   }
 }
