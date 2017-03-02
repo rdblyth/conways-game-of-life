@@ -1,18 +1,12 @@
-case class Board(aliveCells:Set[Cell]) {
+case class Board(aliveCells: Set[Cell]) {
 
-  def tick() : Board = {
-    new Board(getAliveCellsAfterTick())
-  }
+  def tick() : Board = new Board(getAliveCellsAfterTick())
 
-  def isAlive(cell:Cell) : Boolean = {
-    aliveCells.contains(cell)
-  }
+  def isAlive(cell:Cell) : Boolean = aliveCells.contains(cell)
 
-  private def getAliveCellsAfterTick() : Set[Cell] = {
-    getAliveCellsWithNeighbors().filter(isAliveAfterTick(_))
-  }
+  private def getAliveCellsAfterTick() = getAliveCellsWithNeighbors().filter(isAliveAfterTick)
 
-  private def isAliveAfterTick(cell:Cell) : Boolean = {
+  private def isAliveAfterTick(cell:Cell)  = {
     (getNumberOfAliveNeighbors(cell), isAlive(cell)) match {
       case (2, true) => true
       case (3, _) => true
@@ -20,11 +14,7 @@ case class Board(aliveCells:Set[Cell]) {
     }
   }
 
-  private def getAliveCellsWithNeighbors() : Set[Cell] = {
-    aliveCells ++ aliveCells.flatMap(_.neighbors)
-  }
+  private def getAliveCellsWithNeighbors() = aliveCells ++ aliveCells.flatMap(_.neighbors)
 
-  private def getNumberOfAliveNeighbors(cell:Cell) : Int = {
-    cell.neighbors.filter(cell => isAlive(cell)).length
-  }
+  private def getNumberOfAliveNeighbors(cell:Cell) = cell.neighbors.filter(isAlive).length
 }
