@@ -8,17 +8,17 @@ import org.scalatest.prop.Checkers
 @RunWith(classOf[JUnitRunner])
 class BoardTest extends FunSuite with Checkers {
   test("Cell is alive") {
-    val board = new Board(Set(Cell(0, 0)))
+    val board = Board(Set(Cell(0, 0)))
     assert(board.isAlive(Cell(0, 0)))
   }
 
   test("Cell is dead") {
-    val board = new Board(Set(Cell(0, 0)))
+    val board = Board(Set(Cell(0, 0)))
     assert(!board.isAlive(Cell(1, 0)))
   }
 
   test("Duplicate cells are not allowed") {
-    val board = new Board(Set(Cell(0, 0), Cell(0, 0)))
+    val board = Board(Set(Cell(0, 0), Cell(0, 0)))
     assert(board.aliveCells.size == 1)
   }
 
@@ -39,42 +39,42 @@ class BoardTest extends FunSuite with Checkers {
   }
 
   test("Cell with fewer than two live neighbors dies") {
-    val board = new Board(Set(Cell(0,0)))
+    val board = Board(Set(Cell(0,0)))
     assert(!board.tick().isAlive(Cell(0,0)))
   }
 
   test("Alive cell with two live neighbors lives on") {
-    val board = new Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0)))
+    val board = Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0)))
     assert(board.tick().isAlive(Cell(0,0)))
   }
 
   test("Alive cell with three live neighbors lives on") {
-    val board = new Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0), Cell(0,1)))
+    val board = Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0), Cell(0,1)))
     assert(board.tick().isAlive(Cell(0,0)))
   }
 
   test("Alive cell with more than three live neighbors dies") {
-    val board = new Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
+    val board = Board(Set(Cell(0,0), Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
     assert(!board.tick().isAlive(Cell(0,0)))
   }
 
   test("Dead cell with exact three live neighbors becomes a live") {
-    val board = new Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1)))
+    val board = Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1)))
     assert(board.tick().isAlive(Cell(0,0)))
   }
 
   test("Dead cell with less than three live neighbors stays dead") {
-    val board = new Board(Set(Cell(1,0), Cell(-1,0)))
+    val board = Board(Set(Cell(1,0), Cell(-1,0)))
     assert(!board.tick().isAlive(Cell(0,0)))
   }
 
   test("Dead cell with more than three live neighbors stays dead") {
-    val board = new Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
+    val board = Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
     assert(!board.tick().isAlive(Cell(0,0)))
   }
 
   test("Tick is idempotent") {
-    val board = new Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
+    val board = Board(Set(Cell(1,0), Cell(-1,0), Cell(0,1), Cell(0, -1)))
     assert(board.tick() == board.tick())
   }
 }
